@@ -36,6 +36,7 @@ class Mewtwo(Pokemon):
     def print_status(self):
         print("%s has %d health and %d power" % (self.name, self.health, self.power))
 
+
 def pokemon_selector():
    # Change the class names accordingly
     pokemon_list = {
@@ -59,7 +60,8 @@ def pokemon_selector():
           """)
     #Future: add the images of the pokemon you select here. 
     opponent = None
-    while True:
+    running = True
+    while running:
         pokemon_choice = int(input("Who do you choose? "))
         if pokemon_choice == 1:
             player = pokemon_list[1]
@@ -91,8 +93,9 @@ def pokemon_selector():
         #Future: print the opponent's image here(?)
                 
         print("A wild %s has appeared!" % (opponent.name))
-        #Checks player selection - delete later:
+        #Checks player selection:
         #print(player.__dict__)
+        #
         print("""%s is ready! Your pokemon's stats are:
               
               Health: %d
@@ -102,6 +105,30 @@ def pokemon_selector():
               
               """
               % (player.name, player.health, player.basic_attack, player.secondary_attack, player.special_attack))
-        return player, opponent
-    
+        running = False
+        main(player, opponent)
+        #return player, opponent
+
+#pokemon_selector()
+
+
+def main(player, opponent):
+    testing = True
+    while testing:
+        print("What do you want to do? ")
+        print("1. fight goblin")
+        print("2. do nothing")
+        print("3. flee")
+        print("> ",)
+        user_input = int(input(""))
+        if user_input == 1:
+            print (player.name)
+            print (opponent.name)
+            testing = False
+        else:
+            testing = False
+    testing = False
+
+
 pokemon_selector()
+            
