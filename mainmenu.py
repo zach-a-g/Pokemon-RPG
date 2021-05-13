@@ -42,7 +42,6 @@ print(logo)
 print(main_menu)
 user_input = input()
 os.system('clear')
-print(logo)
 
 
 
