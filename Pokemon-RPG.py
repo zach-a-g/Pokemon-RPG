@@ -1,4 +1,44 @@
-#testing branch
+import random
+
+
+# POKE MART ITEMS CLASSES
+class Item():
+    def __init__ (self):
+        self.name = "Item"
+        self.price = "price"
+
+    def use_item(self):
+        attack_function = "item + attack_power"
+        # still thinking on how to make this work
+class Crit_Potion(Item):
+    def __init__(self):
+        super().__init__()
+        self.name = "Critical Chance Potion"
+        self.crit_chance = 0.4
+        # something like if random is true, attack+40% of attack is damage dealt
+        self.price = 20
+class Pokeball(Item):
+    def __init__(self):
+        super().__init__()
+        self.name = "Pokeball"
+        self.catch_chance = 0.15
+        # we already have a catch chance once under certain HP, so how would we add this on?
+        # maybe just start this higher with no "under HP" to just see if it works
+        self.price = 25
+class Master_Pokeball(Item):
+    def __init__(self):
+        super().__init__()
+        self.name = "Master Pokeball"
+        self.catch_chance = 0.5
+        self.price = 75
+class Health(Item):
+    def __init__(self):
+        super().__init__()
+        self.name = "Health Potion"
+        self.healing = 60
+        self.price = 40
+
+# POKEMON CLASSES
 class Pokemon:
     def __init__(self, name, health, attack, defense):
         self.name = name
@@ -9,8 +49,9 @@ class Pokemon:
 
     def attack_opponent(self, other_pokemon):
         # While loop that starts the battle
+        print("A WILD %s APPEARS!" % other_pokemon)
         while self.health > 0 or other_pokemon.health == 0:
-            desire_to_attack = input("Do you want to attack? Yes or No? ")
+            desire_to_attack = input("Choose your attack: List of Commands")
             lower_desire_to_attack = desire_to_attack.lower()
             #If the user wants to attack do:
             if lower_desire_to_attack == "yes":
