@@ -1,5 +1,9 @@
-#This is a test
-#This is another test
+
+import random
+from Items import Item, Crit_Potion, Pokeball, Master_Pokeball, Health
+
+# POKEMON CLASSES
+
 class Pokemon:
     def __init__(self, name, health, attack, defense):
         self.name = name
@@ -10,8 +14,9 @@ class Pokemon:
 
     def attack_opponent(self, other_pokemon):
         # While loop that starts the battle
+        print("A WILD %s APPEARS!" % other_pokemon)
         while self.health > 0 or other_pokemon.health == 0:
-            desire_to_attack = input("Do you want to attack? Yes or No? ")
+            desire_to_attack = input("Choose your attack: List of Commands")
             lower_desire_to_attack = desire_to_attack.lower()
             #If the user wants to attack do:
             if lower_desire_to_attack == "yes":
