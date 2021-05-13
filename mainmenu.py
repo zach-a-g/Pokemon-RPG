@@ -46,18 +46,21 @@ print(logo)
 
 
 
-if user_input == '1':   
+if user_input == '1': 
+    print(logo)  
     print(battle_page)
     user_input = input()
     os.system('clear')
     print("""%s id a great choice! Get ready for battle""" % (pokemon)) 
     
 elif user_input == '2':
+    print(logo)
     print(store_page)
     user_input = input()
     os.system('clear')
 
 elif user_input == '3':
+    print(logo)
     print(medic_page)
     user_input = input('Yes or No: ')
     os.system('clear')
@@ -66,4 +69,6 @@ elif user_input == '3':
     else:
         if user_input == 'No' or 'no':
             print("""%s looks tired. :( Are you sure?.""" % (pokemon))
-    
+else:
+    print(logo)
+    print('Invalid Input. Choose from the on screen selection.')    
