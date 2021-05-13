@@ -1,7 +1,9 @@
+
 import random
 from Items import Item, Crit_Potion, Pokeball, Master_Pokeball, Health
 
 # POKEMON CLASSES
+
 class Pokemon:
     def __init__(self, name, health, attack, defense):
         self.name = name
