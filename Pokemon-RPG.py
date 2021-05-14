@@ -5,6 +5,7 @@ from random import randint
 from pokemon_art import bulbasaur_art, charmander_art, squirtle_art, logo, pokeball_art, goodbye_message
 import os
 import time
+from sys import exit
 
 # POKEMON CLASSES
 
@@ -46,17 +47,7 @@ class Mewtwo(Pokemon):
 
 
 def menu_launch():
-    print("""
-================================================
-  _____   ____  _  ________ __  __  ____  _   _ 
- |  __ \ / __ \| |/ /  ____|  \/  |/ __ \| \ | |
- | |__) | |  | | ' /| |__  | \  / | |  | |  \| |
- |  ___/| |  | |  < |  __| | |\/| | |  | | . ` |
- | |    | |__| | . \| |____| |  | | |__| | |\  |
- |_|     \____/|_|\_\______|_|  |_|\____/|_| \_|
-================================================
-""")
-    
+    logo()
     starter_pokemon = {
     1: Charmander("Charmander", 100, 50),
     2: Squirtle("Squirtle", 100, 40),
@@ -122,7 +113,9 @@ def main(player):
         elif main_input == 4:
             goodbye_message()
             pokeball_art()
+            time.sleep(4)
             main_running = False
+            exit()
         else:
             print("Please type a number 1 - 4. ")
 
@@ -139,13 +132,6 @@ def battle(player):
     opponent_list = [charizard, blastoise, mewtwo, squirtle]
     opponent = random.choice(opponent_list)
     battle = True
-    # opponent_list = {
-    #     1: Gyarados("Gyarados", 100, 50, 45, 110),
-    #     2: Mewtwo("Mewtwo", 200, 70, 80, 200 ),
-    #     3: Charmander("Charmander", 100, 50, 45, 110),
-    #     4: Squirtle("Squirtle", 100, 40, 60, 110),
-    #     5: Bulbasaur("Bulbasaur", 100, 45, 55, 120),
-    # }
     while battle:
         # random_number = randint(1, 5)
         # opponent = opponent_list[random_number]
@@ -243,24 +229,56 @@ def shop(player):
           1. Purchase Potions 
           2. Purchase attack items
           3. Purchase Pokeballs
-          4. Exit the shop
+          4. View Inventory
+          5. Exit the shop
           """)
     shop_input = int(input(""))
     if shop_input == 1:
-        player.bounty -= 50
-        player.items.append
-        print("You have %d potions" % (player.potions))
-        print("Thanks for your purchase!")
-    elif shop_input == 2:
-        player.bounty -= 25
-        player.attack += 25
-        print("Thanks for your purchase!")
+        print("Which potion would you like to purchase?")
+        print("""
+              1. Health Potion (25 coins)
+              2. Attack Potion (30 coins)
+              3. Defense Potion (25 coins)
+              4. View inventory
+              5. Return to shop menu
+              """)
+        potion_input = int(input(""))
+        if potion_input == 1:
+            #Future: subtract from bounty/coins
+            player.items.append("Health Potion")
+            #check to delete later:
+            print(player.items)
+            print("Thanks for the purchase!")
+        elif potion_input == 2:
+            player.items.append("Attack Potion")
+            print("Thanks for the purchase!")
+        elif potion_input == 3:
+            player.items.append("Defense Potion")
+            print("Thanks for the purchase!")      
+        elif potion_input == 4:
+            shop(player)
+        else:
+            print("Please type a number 1 - 5")
+        # player.bounty -= 50
+        # player.items.append
+        # print("You have %d potions" % (player.potions))
+        # print("Thanks for your purchase!")
     else:
-        print("Thanks for stopping by!")
+        shop(player)
+    # elif shop_input == 2:
+    #     player.bounty -= 25
+    #     player.attack += 25
+    #     print("Thanks for your purchase!")
+    # else:
+    #     print("Thanks for stopping by!")
     main(player)
+
 
 
 menu_launch()
 
+
+
+    
 
 
