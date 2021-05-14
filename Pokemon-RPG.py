@@ -4,6 +4,7 @@ import time
 import random
 from Items import Item, Crit_Potion, Pokeball, Master_Pokeball, Health
 from random import randint
+from battle import battle_page, delay_print
 
 # POKEMON CLASSES
 
@@ -67,7 +68,6 @@ class Bulbasaur(Pokemon):
     def print_status(self):
         print("%s has %d health and %d power" % (self.name, self.health, self.power))
 
-
 def menu_launch():
     print("""
 ================================================
@@ -123,10 +123,9 @@ def menu_launch():
         main(player)
 
 
-
 def main(player):
     print("What do you and %s want to do? " % (player.name))
-    shop(player)
+    battle_page(player)
 
 def shop(player):
     print("This is a test %s" % (player.name))
