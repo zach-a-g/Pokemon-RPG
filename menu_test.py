@@ -1,4 +1,5 @@
 #test classes:
+from pokemon_art import bulbasaur_art, charmander_art, squirtle_art
 
 class Pokemon:
     def __init__(self, name, health, basic_attack, secondary_attack, special_attack):
@@ -63,10 +64,13 @@ def menu_launch():
         pokemon_choice = int(input("Who do you choose? "))
         if pokemon_choice == 1:
             player = starter_pokemon[1]
+            charmander_art()
         elif pokemon_choice == 2:
             player = starter_pokemon[2]
+            squirtle_art()
         elif pokemon_choice == 3:
             player = starter_pokemon[3]
+            bulbasaur_art()
     
         else:
             print("Please choose a number 1 - 3.")
@@ -87,8 +91,6 @@ def main(player):
 
 def shop(player):
     print("This is a test %s" % (player.name))
-
-
 
 
 menu_launch()
