@@ -10,6 +10,7 @@ import time
 
 #Basic class and subclasses for testing purposes
 
+
 class Pokemon:
     def __init__(self, name, health, attack):
         self.name = name
@@ -20,7 +21,6 @@ class Pokemon:
         # self.secondary_attack = secondary_attack
         # self.special_attack = special_attack
         
-
 class Charmander(Pokemon):
     def print_status(self):
         print("%s has %d health and %d power" % (self.name, self.health, self.power))
@@ -32,8 +32,7 @@ class Squirtle(Pokemon):
 
 class Bulbasaur(Pokemon):
     def print_status(self):
-        print("%s has %d health and %d power" % (self.name, self.health, self.power))
-        
+        print("%s has %d health and %d power" % (self.name, self.health, self.power))    
 
 class Gyarados(Pokemon):
     def print_status(self):
@@ -42,9 +41,6 @@ class Gyarados(Pokemon):
 class Mewtwo(Pokemon):
     def print_status(self):
         print("%s has %d health and %d power" % (self.name, self.health, self.power))
-
-
-
 
 
 def menu_launch():
@@ -85,6 +81,7 @@ def menu_launch():
         pokemon_choice = int(input("Who do you choose? "))
         if pokemon_choice == 1:
             player = starter_pokemon[1]
+
             charmander_art()
         elif pokemon_choice == 2:
             player = starter_pokemon[2]
@@ -92,17 +89,13 @@ def menu_launch():
         elif pokemon_choice == 3:
             player = starter_pokemon[3]
             bulbasaur_art()
-    
         else:
             print("Please choose a number 1 - 3.")
-    
         print("What an excellent choice!! Take care of %s for us!" % (player.name))
         #Tests the selection above - delete later
         #print(player.__dict__)
         running = False
         main(player)
-
-
 
 def main(player):
     print("""
@@ -226,6 +219,7 @@ def shop(player):
     else:
         print("Thanks for stopping by!")
     main(player)
+
 
 
 menu_launch()
