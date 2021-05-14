@@ -221,7 +221,7 @@ def shop(player):
         print("Thanks for your purchase!")
     elif shop_input == 2:
         player.bounty -= 25
-        player.basic_ttacks += 25
+        player.attack += 25
         print("Thanks for your purchase!")
     else:
         print("Thanks for stopping by!")
