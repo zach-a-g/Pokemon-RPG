@@ -2,7 +2,7 @@
 import random
 from items import Item, Crit_Potion, Pokeball, Master_Pokeball, Health
 from random import randint
-from pokemon_art import bulbasaur_art, charmander_art, squirtle_art
+from pokemon_art import bulbasaur_art, charmander_art, squirtle_art, logo
 import os
 import time
 
@@ -14,8 +14,8 @@ class Pokemon:
     def __init__(self, name, health, attack):
         self.name = name
         self.health = health
-        self.bounty = 0
-        self.potions = 1
+        self.bounty = 50
+        self.items = []
         self.attack = attack
         # self.secondary_attack = secondary_attack
         # self.special_attack = special_attack
@@ -42,8 +42,6 @@ class Gyarados(Pokemon):
 class Mewtwo(Pokemon):
     def print_status(self):
         print("%s has %d health and %d power" % (self.name, self.health, self.power))
-
-
 
 
 
@@ -115,7 +113,7 @@ def main(player):
     if main_input == 1:  
         battle(player)
     elif main_input == 2:
-        print("testing")
+        medic(player)
         # medic(player)
     elif main_input == 3:
         shop(player)
@@ -130,7 +128,7 @@ def battle(player):
     mewtwo = Pokemon('Mewtwo', 100, 25)
     squirtle = Pokemon('Squirtle', 100, 25)
 
-    characters = [" ", charizard, blastoise, mewtwo, squirtle]
+    # characters = [" ", charizard, blastoise, mewtwo, squirtle]
 
     opponent_list = [charizard, blastoise, mewtwo, squirtle]
     opponent = random.choice(opponent_list)
@@ -157,14 +155,14 @@ def battle(player):
             4.Flee
             """)
         if action == '1' and player.health > 0:
-            time.sleep(3)
+            time.sleep(1)
             print(player.health)
             print("%s attacked %s." % (player.name, opponent.name))
             time.sleep(3)
             print(' ')
             opponent.health -= player.attack 
             print("%s's health has decreased to %d." % (opponent.name, opponent.health))
-            time.sleep(3)
+            time.sleep(2)
             #Add statement to make value 0 to avoid negative health
             if opponent.health <= 0:
                 #add delay print later
@@ -179,7 +177,7 @@ def battle(player):
                 print("It's your enemy's turn to attack.")
                 time.sleep(1)
                 player.health -= opponent.attack
-                print("""%s's health is now %d""" % (player.name, opponent.health))
+                print("""%s's health is now %d""" % (player.name, player.health))
                 time.sleep(4)
             
             else:
@@ -196,16 +194,42 @@ def battle(player):
                 print("%s defended itself, but it failed." % (player.name)) 
                 print("%s health is: %d" % (player.name, player.health))
                 time.sleep(3)
-
+        elif action == '4':
+            print("You have fled the battle!")
+            time.sleep(2)
+            main(player)
+        
         else:
-            pass
+            print("Please type in a number 1 -4")
 
     
+
+def medic(player):
+    os.system("clear")
+    print("Hello, and welcome to the Pokemon Center. We restore your tired Pokemon to full health. Do you want to heal %s? " % (player.name))
+    # print("%s's health is %s" % (player.name, player.health))
+    medic_input = input("")
+    lower_medic_input = medic_input.lower()
+    if lower_medic_input == "yes":
+        player.health = 100
+        print("%s is at full health." % (player.name))
+        time.sleep(2)
+        os.system("clear")
+        logo()
+        main(player)
+    elif lower_medic_input == "no":
+        print("%s looks tired. :( Are you sure? " % (player.name))
+        second_chance = input("")
+        if second_chance == "yes":
+            main(player)
+        else:
+            player.health = 100
+            print("%s is at full health." % (player.name))
+    else:
+        print("Please type yes or no.")
+        
     
-# def defend_sequence(player, opponent):
-#         if player.health > 0:
-#                 player.health -= opponent.attack / 2
-#                 print("%s defended itself. Damage was reduced to half. %s's health is now %d" % (player.name, player.name, player.health))
+
 
 def shop(player):
     print("Welcome to the shop! What can we help you with today?")
@@ -213,11 +237,13 @@ def shop(player):
           1. Purchase Potions 
           2. Purchase attack items
           3. Purchase Pokeballs
+          4. Exit the shop
           """)
     shop_input = int(input(""))
     if shop_input == 1:
         player.bounty -= 50
-        player.potions += 1
+        player.items.append
+        print("You have %d potions" % (player.potions))
         print("Thanks for your purchase!")
     elif shop_input == 2:
         player.bounty -= 25
