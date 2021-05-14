@@ -213,6 +213,7 @@ def shop(player):
           1. Purchase Potions 
           2. Purchase attack items
           3. Purchase Pokeballs
+          4. Exit the store
           """)
     shop_input = int(input(""))
     if shop_input == 1:
@@ -223,9 +224,11 @@ def shop(player):
         player.bounty -= 25
         player.basic_ttacks += 25
         print("Thanks for your purchase!")
+    elif shop_input == 4:
+        main(player)
     else:
-        print("Thanks for stopping by!")
-    main(player)
+        print("Please type a number 1 - 4 ")
+
 
 
 menu_launch()
