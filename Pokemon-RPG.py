@@ -1,10 +1,10 @@
-
 import random
 from Items import Item, Crit_Potion, Pokeball, Master_Pokeball, Health
 from random import randint
-from pokemon_art import bulbasaur_art, charmander_art, squirtle_art, logo, pokeball_art, goodbye_message
+from pokemon_art import bulbasaur_art, charmander_art, squirtle_art, logo, pokeball_art, goodbye_message, professor_oak, nurse_joy
 import os
 import time
+from pygame_tester import test
 from sys import exit
 
 # POKEMON CLASSES
@@ -47,6 +47,7 @@ class Mewtwo(Pokemon):
 
 
 def menu_launch():
+    os.system("clear")
     logo()
     starter_pokemon = {
     1: Charmander("Charmander", 100, 50),
@@ -55,6 +56,10 @@ def menu_launch():
     }
     
     user_name = input("What is your name young trainer? ")
+    time.sleep(2)
+    os.system("clear")
+    professor_oak()
+    print("")
     print("Nice to meet you %s. I'm Professor Oak. I'll be helping you on your quest to become a pokemon trainer. Let's get you set up with a pokemon. Choose wisely, this pokemon will become your best friend and trusted ally." % (user_name))
     print("")
     print("====================================================================================")
@@ -72,6 +77,8 @@ def menu_launch():
     running = True
     while running:
         pokemon_choice = int(input("Who do you choose? "))
+        time.sleep(1)
+        os.system("clear")
         if pokemon_choice == 1:
             player = starter_pokemon[1]
             charmander_art()
@@ -88,6 +95,7 @@ def menu_launch():
         print("What an excellent choice!! Take care of %s for us!" % (player.name))
         #Tests the selection above - delete later
         #print(player.__dict__)
+        play_song = False
         running = False
         main(player)
 
@@ -111,9 +119,11 @@ def main(player):
         elif main_input == 3:
             shop(player)
         elif main_input == 4:
+            time.sleep(1)
+            os.system("clear")
             goodbye_message()
             pokeball_art()
-            time.sleep(4)
+            time.sleep(3)
             main_running = False
             exit()
         else:
@@ -148,7 +158,6 @@ def battle(player):
             """)
         if action == '1' and player.health > 0:
             time.sleep(1)
-            print(player.health)
             print("%s attacked %s." % (player.name, opponent.name))
             time.sleep(3)
             print(' ')
@@ -198,6 +207,7 @@ def battle(player):
 
 def medic(player):
     os.system("clear")
+    nurse_joy()
     print("Hello, and welcome to the Pokemon Center. We restore your tired Pokemon to full health. Do you want to heal %s? " % (player.name))
     # print("%s's health is %s" % (player.name, player.health))
     medic_input = input("")
