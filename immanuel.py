@@ -1,6 +1,7 @@
 import os
 import time
 import random
+from warnings import catch_warnings
 
 logo = ("""
 ================================================
@@ -104,7 +105,6 @@ while active == True:
     os.system('clear')
 
 
-
     if user_input == '1':
         running =True 
         print(logo)  
@@ -132,6 +132,7 @@ while active == True:
             4.Flee
             """)
             if action == '1' and poke_choice.health > 0:
+
                 time.sleep(1)
                 print("%s attacked %s." % (poke_choice.name, opponent.name))
                 time.sleep(2)
@@ -149,19 +150,13 @@ while active == True:
             
             else:
                 print("Please enter a valid option.")
-    
 
-            
-        
-
-
-        
-    
     elif user_input == '2':
         print(logo)
         print(store_page)
         user_input = input()
-        # os.system('clear')
+        os.system('clear')
+        
 
     elif user_input == '3':
         print(logo)
