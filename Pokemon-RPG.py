@@ -1,6 +1,10 @@
+
 import random
+#from Items import Item, Crit_Potion, Pokeball, Master_Pokeball, Health
 from random import randint
-import os
+from pokemon_art import bulbasaur_art, charmander_art, squirtle_art
+
+# POKEMON CLASSES
 
 #Basic class and subclasses for testing purposes
 
@@ -38,8 +42,33 @@ class Mewtwo(Pokemon):
         print("%s has %d health and %d power" % (self.name, self.health, self.power))
 
 
-def pokemon_selector():
-    testing = True
+class Pokemon:
+    def __init__(self, name, health, basic_attack, secondary_attack, special_attack):
+        self.name = name
+        self.health = health
+        self.bounty = 0
+        self.potions = 1
+        self.basic_attack = basic_attack
+        self.secondary_attack = secondary_attack
+        self.special_attack = special_attack
+        
+
+class Charmander(Pokemon):
+    def print_status(self):
+        print("%s has %d health and %d power" % (self.name, self.health, self.power))
+
+
+class Squirtle(Pokemon):
+    def print_status(self):
+        print("%s has %d health and %d power" % (self.name, self.health, self.power))
+
+class Bulbasaur(Pokemon):
+    def print_status(self):
+        print("%s has %d health and %d power" % (self.name, self.health, self.power))
+
+
+
+def menu_launch():
     print("""
 ================================================
   _____   ____  _  ________ __  __  ____  _   _ 
@@ -50,105 +79,106 @@ def pokemon_selector():
  |_|     \____/|_|\_\______|_|  |_|\____/|_| \_|
 ================================================
 """)
- 
-    pokemon_list = {
-        #Character name, health, basic attack, seconday attack, special:
-        #Possibly add another for coins/loot to give?
-    1 : Charizard("Charizard", 100, 50, 140, 110),
+    
+    starter_pokemon = {
+    1: Charmander("Charmander", 100, 50, 45, 110),
     2: Squirtle("Squirtle", 100, 40, 60, 110),
     3: Bulbasaur("Bulbasaur", 100, 45, 55, 120),
-    4: Gyarados("Gyarados", 100, 40, 90, 140),
-    5: Mewtwo("Mewtwo", 150, 60, 100, 120),
     }
-    while testing:
-        print("""WELCOME TO POKEMON!! 
-            1. Battle Arena 
-            2.Visit Store.
-            3. Medic """)
-        user_input = int(input(""))
-   # Change the class names accordingly
-
-        if user_input == 1:
-    #Edit this later to include more exciting text
-            print("""
-          Choose your pokemon!
-          1. Charizard
-          2. Squirtle
-          3. Bulbasaur
-          4. Gyarados
-          5. Mewtwo
-          """)
-    #Future: add the images of the pokemon you select here. 
-        opponent = None
-        running = True
-        while running:
-            pokemon_choice = int(input("Who do you choose? "))
-            if pokemon_choice == 1:
-                player = pokemon_list[1]
-            elif pokemon_choice == 2:
-                player = pokemon_list[2]
-            elif pokemon_choice == 3:
-                player = pokemon_list[3]
-            elif pokemon_choice == 4:
-                player = pokemon_list[4]
-            elif pokemon_choice == 5:
-                player = pokemon_list[5]
-            else:
-                print("Please choose a number 1 - 5.")
-
-        for pokemon in pokemon_list:
-            pokemon_checker = pokemon_list[pokemon].name
-            #Checks to make sure the selector is working correctly
-        
-        while opponent is None:
-            if player.name != pokemon_checker:
-                #Assigns random opponent from pokemon dictionary.
-                random_number = randint(1, 5)
-                #Takes the random number above and uses it to assign opponent the corresponding key from the dictionary
-                opponent = pokemon_list[random_number]
-                #Test that it's working correctly
-                print("**********")
-                print(opponent.name)
-                
-        #Future: print the opponent's image here(?)
-                
-            print("A wild %s has appeared!" % (opponent.name))
-        #Checks player selection:
-        #print(player.__dict__)
-        #
-            print("""%s is ready! Your pokemon's stats are:
-              
-              Health: %d
-              Basic attack: %d
-              Secondary Attack: %d
-              Special Attack: %d
-              
-              """
-              % (player.name, player.health, player.basic_attack, player.secondary_attack, player.special_attack))
-            running = False
-        main(player, opponent)
-
-
-#pokemon_selector()
-
-
-def main(player, opponent):
-    testing = True
-
-    while testing:
-        print("""WELCOME TO POKEMON!! 
-            1. Battle Arena 
-            2.Visit Store.
-            3. Medic """)
-        user_input = int(input(""))
-        if user_input == 1:
-            print (player.name)
-            print (opponent.name)
-            testing = False
+    
+    user_name = input("What is your name young trainer? ")
+    print("Nice to meet you %s. I'm Professor Oak. I'll be helping you on your quest to become a pokemon trainer. Let's get you set up with a pokemon. Choose wisely, this pokemon will become your best friend and trusted ally." % (user_name))
+    print("")
+    print("====================================================================================")
+    print("")
+    print("Choose your pokemon:")
+    print("""
+    1. Charmander
+    2. Squirtle
+    3. Bulbasaur
+              """)
+    # user_input = int(input(""))
+    # print(user_input)
+    
+    player = None
+    running = True
+    while running:
+        pokemon_choice = int(input("Who do you choose? "))
+        if pokemon_choice == 1:
+            player = starter_pokemon[1]
+            charmander_art()
+        elif pokemon_choice == 2:
+            player = starter_pokemon[2]
+            squirtle_art()
+        elif pokemon_choice == 3:
+            player = starter_pokemon[3]
+            bulbasaur_art()
+    
         else:
-            testing = False
-    testing = False
+            print("Please choose a number 1 - 3.")
+    
+        print("What an excellent choice!! Take care of %s for us!" % (player.name))
+        #Tests the selection above - delete later
+        #print(player.__dict__)
+        running = False
+        main(player)
 
 
-pokemon_selector()
-            
+
+def main(player):
+    print("""
+          1. Find wild pokemon
+          2. Tournament
+          3. Visit the Store
+    
+          """)
+    main_input = int(input("What do you and %s want to do? " % (player.name)))
+    if main_input == 1:  
+        battle(player)
+    elif main_input == 3:
+        shop(player)
+    else:
+        print("test")
+
+
+def battle(player):
+
+    battle = True
+    opponent_list = {
+        1: Gyarados("Gyarados", 100, 50, 45, 110),
+        2: Mewtwo("Mewtwo", 200, 70, 80, 200 ),
+    }
+    while battle:
+        random_number = randint(1, 2)
+        opponent = opponent_list[random_number]
+        print("A wild %s appears!" % (opponent.name)) 
+        print(player.name)
+        #Launch into battle sequence here
+        battle = False
+    
+
+def shop(player):
+    print("Welcome to the shop! What can we help you with today?")
+    print("""
+          1. Purchase Potions 
+          2. Purchase attack items
+          3. Purchase Pokeballs
+          """)
+    shop_input = int(input(""))
+    if shop_input == 1:
+        player.bounty -= 50
+        player.potions += 1
+        print("Thanks for your purchase!")
+    elif shop_input == 2:
+        player.bounty -= 25
+        player.basic_ttacks += 25
+        print("Thanks for your purchase!")
+    else:
+        print("Thanks for stopping by!")
+    main(player)
+
+
+menu_launch()
+
+
+
