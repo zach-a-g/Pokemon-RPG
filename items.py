@@ -34,3 +34,4 @@ class Health(Item):
         self.name = "Health Potion"
         self.healing = 60
         self.price = 40
+
