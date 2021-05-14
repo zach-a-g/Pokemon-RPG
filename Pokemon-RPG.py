@@ -1,8 +1,8 @@
 
 import random
-from items import Item, Crit_Potion, Pokeball, Master_Pokeball, Health
+from Items import Item, Crit_Potion, Pokeball, Master_Pokeball, Health
 from random import randint
-from pokemon_art import bulbasaur_art, charmander_art, squirtle_art, logo
+from pokemon_art import bulbasaur_art, charmander_art, squirtle_art, logo, pokeball_art, goodbye_message
 import os
 import time
 
@@ -107,18 +107,24 @@ def main(player):
           1. Find wild pokemon
           2. Visit Nurse Joy
           3. Visit the Store
+          4. Quit 
     
           """)
     main_input = int(input("What do you and %s want to do? " % (player.name)))
-    if main_input == 1:  
-        battle(player)
-    elif main_input == 2:
-        medic(player)
-        # medic(player)
-    elif main_input == 3:
-        shop(player)
-    else:
-        print("test")
+    main_running = True
+    while main_running == True:
+        if main_input == 1:  
+            battle(player)
+        elif main_input == 2:
+            medic(player)
+        elif main_input == 3:
+            shop(player)
+        elif main_input == 4:
+            goodbye_message()
+            pokeball_art()
+            main_running = False
+        else:
+            print("Please type a number 1 - 4. ")
 
 
 def battle(player):
