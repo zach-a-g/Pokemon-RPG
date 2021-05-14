@@ -9,7 +9,6 @@ import time
 # POKEMON CLASSES
 
 #Basic class and subclasses for testing purposes
-
 class Pokemon:
     def __init__(self, name, health, attack):
         self.name = name
@@ -20,31 +19,21 @@ class Pokemon:
         # self.secondary_attack = secondary_attack
         # self.special_attack = special_attack
         
-
 class Charmander(Pokemon):
     def print_status(self):
         print("%s has %d health and %d power" % (self.name, self.health, self.power))
-
-
 class Squirtle(Pokemon):
     def print_status(self):
         print("%s has %d health and %d power" % (self.name, self.health, self.power))
-
 class Bulbasaur(Pokemon):
     def print_status(self):
-        print("%s has %d health and %d power" % (self.name, self.health, self.power))
-        
-
+        print("%s has %d health and %d power" % (self.name, self.health, self.power))    
 class Gyarados(Pokemon):
     def print_status(self):
         print("%s has %d health and %d power" % (self.name, self.health, self.power))
-        
 class Mewtwo(Pokemon):
     def print_status(self):
         print("%s has %d health and %d power" % (self.name, self.health, self.power))
-
-
-
 
 
 def menu_launch():
@@ -92,24 +81,19 @@ def menu_launch():
         elif pokemon_choice == 3:
             player = starter_pokemon[3]
             bulbasaur_art()
-    
         else:
             print("Please choose a number 1 - 3.")
-    
         print("What an excellent choice!! Take care of %s for us!" % (player.name))
         #Tests the selection above - delete later
         #print(player.__dict__)
         running = False
         main(player)
 
-
-
 def main(player):
     print("""
           1. Find wild pokemon
           2. Visit Nurse Joy
           3. Visit the Store
-    
           """)
     main_input = int(input("What do you and %s want to do? " % (player.name)))
     if main_input == 1:  
@@ -200,8 +184,6 @@ def battle(player):
         else:
             pass
 
-    
-    
 # def defend_sequence(player, opponent):
 #         if player.health > 0:
 #                 player.health -= opponent.attack / 2
@@ -226,6 +208,5 @@ def shop(player):
     else:
         print("Thanks for stopping by!")
     main(player)
-
 
 menu_launch()
