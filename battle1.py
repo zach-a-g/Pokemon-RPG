@@ -13,9 +13,10 @@ logo = ("""
 ================================================
 """)
 
-main_menu = ("""WELCOME TO POKEMON!! 
+def battle_menu():
+    print("""WELCOME TO POKEMON!! 
 1. Battle Arena 
-2.Visit Store.
+2. Visit Store.
 3. Medic """)
 
 
@@ -95,11 +96,11 @@ characters = [" ", charizard, blastoise, mewtwo, squirtle]
 opps = [charizard, blastoise, mewtwo, squirtle]
 poke = charizard
 
-active = True
-while active == True:
-
+#active = True
+#while active == True:
+def start_battle():
     print(logo)
-    print(main_menu)
+    battle_menu()
     user_input = input()
     os.system('clear')
 
@@ -157,23 +158,23 @@ while active == True:
 
         
     
-    elif user_input == '2':
-        print(logo)
-        print(store_page)
-        user_input = input()
-        # os.system('clear')
+    # elif user_input == '2':
+    #     print(logo)
+    #     print(store_page)
+    #     user_input = input()
+    #     # os.system('clear')
 
-    elif user_input == '3':
-        print(logo)
-        print(medic_page)
-        user_input = input('Yes or No: ')
-        # os.system('clear')
-        if user_input == 'Yes' or 'yes':
-            print('%s is all healed. Feel free to drop by anytime' % (poke.name))    
-        else:
-            if user_input == 'No' or 'no':
-                print("""%s looks tired. :( Are you sure?.""" % (poke.name))
-    else:
-        # os.system('clear')
-        print(logo)
-        print('Invalid Input. Choose from the on screen selection.')    
+    # elif user_input == '3':
+    #     print(logo)
+    #     print(medic_page)
+    #     user_input = input('Yes or No: ')
+    #     # os.system('clear')
+    #     if user_input == 'Yes' or 'yes':
+    #         print('%s is all healed. Feel free to drop by anytime' % (poke.name))    
+    #     else:
+    #         if user_input == 'No' or 'no':
+    #             print("""%s looks tired. :( Are you sure?.""" % (poke.name))
+    # else:
+    #     # os.system('clear')
+    #     print(logo)
+    #     print('Invalid Input. Choose from the on screen selection.')    

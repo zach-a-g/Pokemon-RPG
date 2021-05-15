@@ -57,3 +57,5 @@ def battle_page(player, other_pokemon):
         else: 
             print("%s now has %d health." % pokemon.name, pokemon.health)
             break
+
+range = random.randrage(1,5)
