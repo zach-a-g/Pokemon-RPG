@@ -4,12 +4,11 @@ from random import randint
 from pokemon_art import bulbasaur_art, charmander_art, squirtle_art, logo, pokeball_art, goodbye_message, professor_oak, nurse_joy
 import os
 import time
-from pygame_tester import test
+from pygame_tester import nineties_intro, battle_song
 from sys import exit
 
 # POKEMON CLASSES
 
-#Basic class and subclasses for testing purposes
 
 class Pokemon:
     def __init__(self, name, health, attack):
@@ -128,6 +127,11 @@ def main(player):
             exit()
         else:
             print("Please type a number 1 - 4. ")
+            time.sleep(2)
+            os.system("clear")
+            logo()
+            main(player)
+            
 
 
 def battle(player):
@@ -142,14 +146,16 @@ def battle(player):
     opponent_list = [charizard, blastoise, mewtwo, squirtle]
     opponent = random.choice(opponent_list)
     battle = True
+    print("A wild %s appears!" % (opponent.name)) 
     while battle:
         # random_number = randint(1, 5)
         # opponent = opponent_list[random_number]
-        print("A wild %s appears!" % (opponent.name)) 
-        print(player.name)
+
+        time.sleep(2)
         #Launch into battle sequence here
         os.system('clear')
         # print(logo)
+        logo()
         action = input("""What would you like to do?
             1.Attack
             2.Defend
@@ -209,6 +215,7 @@ def medic(player):
     os.system("clear")
     nurse_joy()
     print("Hello, and welcome to the Pokemon Center. We restore your tired Pokemon to full health. Do you want to heal %s? " % (player.name))
+    print("")
     # print("%s's health is %s" % (player.name, player.health))
     medic_input = input("")
     lower_medic_input = medic_input.lower()
@@ -266,22 +273,24 @@ def shop(player):
             player.items.append("Defense Potion")
             print("Thanks for the purchase!")      
         elif potion_input == 4:
+            print(player.items)
+        elif potion_input == 5:
             shop(player)
         else:
             print("Please type a number 1 - 5")
-        # player.bounty -= 50
-        # player.items.append
-        # print("You have %d potions" % (player.potions))
-        # print("Thanks for your purchase!")
+    
+    #Still need to input options for 2 and 3 
+    
+    elif shop_input == 4:
+        print(player.items)
+    
+    elif shop_input == 5:
+        main(player)
+
     else:
-        shop(player)
-    # elif shop_input == 2:
-    #     player.bounty -= 25
-    #     player.attack += 25
-    #     print("Thanks for your purchase!")
-    # else:
-    #     print("Thanks for stopping by!")
-    main(player)
+        print("Please type a number 1-5. ")
+
+    # main(player)
 
 
 
