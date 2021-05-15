@@ -255,7 +255,6 @@ def medic(player):
         
     
 
-
 def shop(player):
     print("Welcome to the shop! What can we help you with today?")
     print("""
