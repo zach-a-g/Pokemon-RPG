@@ -236,12 +236,21 @@ def medic(player):
     elif lower_medic_input == "no":
         print("%s looks tired. :( Are you sure? " % (player.name))
         second_chance = input("")
-        if second_chance == "yes":
+        second_chance_lower = second_chance.lower()
+        if second_chance_lower == "yes":
+            time.sleep(2)
             main(player)
-        else:
+        # Fixed small bug to account for when users type something else besides yes and no
+        elif second_chance_lower == "no":
             player.health = 100
+            time.sleep(2)
             print("%s is at full health." % (player.name))
+            main(player)
+            
+        else:
+            print("Please type yes or no. ")
     else:
+        time.sleep(2)
         print("Please type yes or no.")
         
     
