@@ -1,10 +1,11 @@
 import random
-from Items import Item, Crit_Potion, Pokeball, Master_Pokeball, Health
+import pygame
 from random import randint
+from Items import Item, Crit_Potion, Pokeball, Master_Pokeball, Health
 from pokemon_art import bulbasaur_art, charmander_art, squirtle_art, logo, pokeball_art, goodbye_message, professor_oak, nurse_joy
 import os
 import time
-from pygame_tester import nineties_intro, battle_song
+from audio import classic_intro
 from sys import exit
 
 # POKEMON CLASSES
@@ -75,32 +76,34 @@ def menu_launch():
     player = None
     running = True
     while running:
-        pokemon_choice = int(input("Who do you choose? "))
-        time.sleep(1)
-        os.system("clear")
-        if pokemon_choice == 1:
+        pokemon_choice = input("Who do you choose %s? " % (user_name))
+        if pokemon_choice == "1":
             player = starter_pokemon[1]
             charmander_art()
-        elif pokemon_choice == 2:
+            running = False
+        elif pokemon_choice == "2":
             player = starter_pokemon[2]
             squirtle_art()
-        elif pokemon_choice == 3:
+            running = False
+        elif pokemon_choice == "3":
             player = starter_pokemon[3]
             bulbasaur_art()
-    
+            running = False
         else:
             print("Please choose a number 1 - 3.")
-    
-        print("What an excellent choice!! Take care of %s for us!" % (player.name))
-        #Tests the selection above - delete later
-        #print(player.__dict__)
-        play_song = False
-        running = False
-        main(player)
+
+
+
+    print("What an excellent choice!! Take care of %s for us!" % (player.name))
+    time.sleep(3)
+    os.system("clear")
+    main(player)
 
 
 
 def main(player):
+    os.system("clear")
+    logo()
     print("""
           1. Find wild pokemon
           2. Visit Nurse Joy
@@ -118,11 +121,12 @@ def main(player):
         elif main_input == 3:
             shop(player)
         elif main_input == 4:
+            pygame.mixer.music.fadeout(4000)
             time.sleep(1)
             os.system("clear")
             goodbye_message()
             pokeball_art()
-            time.sleep(3)
+            time.sleep(4)
             main_running = False
             exit()
         else:
@@ -141,21 +145,22 @@ def battle(player):
     mewtwo = Pokemon('Mewtwo', 100, 25)
     squirtle = Pokemon('Squirtle', 100, 25)
 
-    # characters = [" ", charizard, blastoise, mewtwo, squirtle]
 
     opponent_list = [charizard, blastoise, mewtwo, squirtle]
     opponent = random.choice(opponent_list)
     battle = True
     print("A wild %s appears!" % (opponent.name)) 
     while battle:
+        
         # random_number = randint(1, 5)
         # opponent = opponent_list[random_number]
-
         time.sleep(2)
         #Launch into battle sequence here
         os.system('clear')
-        # print(logo)
         logo()
+        battle_anouncement = "%s VS %s" % (player.name,opponent.name)
+        print(battle_anouncement.upper())
+        print("")
         action = input("""What would you like to do?
             1.Attack
             2.Defend
@@ -181,9 +186,10 @@ def battle(player):
             
             if opponent.health > 0:
                 print("""============================================================""")
-                print("It's your enemy's turn to attack.")
+                print("It's %s's turn to attack." % (opponent.name))
                 time.sleep(1)
                 player.health -= opponent.attack
+                print("")
                 print("""%s's health is now %d""" % (player.name, player.health))
                 time.sleep(4)
             
@@ -221,6 +227,7 @@ def medic(player):
     lower_medic_input = medic_input.lower()
     if lower_medic_input == "yes":
         player.health = 100
+        time.sleep(2)
         print("%s is at full health." % (player.name))
         time.sleep(2)
         os.system("clear")
@@ -285,12 +292,13 @@ def shop(player):
         print(player.items)
     
     elif shop_input == 5:
+        time.sleep(2)
+        os.system("clear")
         main(player)
 
     else:
         print("Please type a number 1-5. ")
 
-    # main(player)
 
 
 
