@@ -1,19 +1,17 @@
 import random
+import pygame
 # from items import Item, Crit_Potion, Pokeball, Master_Pokeball, Health
 from random import randint
-from pokemon_art import bulbasaur_art, charmander_art, pokeball_art, squirtle_art, logo
+from pokemon_art import bulbasaur_art, charmander_art, pokeball_art, squirtle_art, logo, pokeball_art, goodbye_message, professor_oak, nurse_joy
 import os
 import time
 import sys
+from audio import classic_intro
 
 # POKEMON CLASSES ####################################################################
 
-#Basic class and subclasses for testing purposes
-
 
 item_inventory = []
-
-#Basic class and subclasses for testing purposes
 
 class Pokemon:
     def __init__(self, name, health, attack):
@@ -64,17 +62,7 @@ def delay_print(s):
 # Main Menu #########################################################################
 def menu_launch():
     os.system('clear')
-    print("""
-===============================================================
-         _____   ____  _  ________ __  __  ____  _   _ 
-        |  __ \ / __ \| |/ /  ____|  \/  |/ __ \| \ | |
-        | |__) | |  | | ' /| |__  | \  / | |  | |  \| |
-        |  ___/| |  | |  < |  __| | |\/| | |  | | . ` |
-        | |    | |__| | . \| |____| |  | | |__| | |\  |
-        |_|     \____/|_|\_\______|_|  |_|\____/|_| \_|
-===============================================================
-""")
-    
+    logo()
     starter_pokemon = {
     1: Charmander("Charmander", 200, 50),
     2: Squirtle("Squirtle", 200, 40),
@@ -82,6 +70,9 @@ def menu_launch():
     }
     
     user_name = input("What is your name young trainer? ")
+    time.sleep(2)
+    os.system("clear")
+    professor_oak()
     delay_print("\nNice to meet you %s! I'm Professor Oak. I'll be helping you \non your quest to become a pokemon trainer. \n \nLet's get you set up with a pokemon.\n \nChoose wisely, this pokemon will become your best friend and \ntrusted ally." % (user_name))
     print("")
     print("\n===============================================================")
@@ -93,35 +84,33 @@ def menu_launch():
                     2. Squirtle
                     3. Bulbasaur
               """)
-    # user_input = int(input(""))
-    # print(user_input)
-
+    
     user_name = None
 
     player = None
     running = True
     while running:
-        pokemon_choice = int(input("Who do you choose? "))
-        if pokemon_choice == 1:
+        pokemon_choice = input("Who do you choose? ")
+        if pokemon_choice == "1":
             player = starter_pokemon[1]
             charmander_art()
-        elif pokemon_choice == 2:
+            running = False
+        elif pokemon_choice == "2":
             player = starter_pokemon[2]
             squirtle_art()
-        elif pokemon_choice == 3:
+            running = False
+        elif pokemon_choice == "3":
             player = starter_pokemon[3]
             bulbasaur_art()
-    
+            running = False
         else:
             print("Please choose a number 1 - 3.")
 
-        time.sleep(2)
-        delay_print(str("What an excellent choice!! Take care of %s for us!" % (player.name)))
-        time.sleep(5)
-        #Tests the selection above - delete later
-        #print(player.__dict__)
-        running = False
-        main(player)
+    time.sleep(2)
+    delay_print(str("What an excellent choice!! Take care of %s for us!" % (player.name)))
+    time.sleep(3)
+    os.system("clear")
+    main(player)
 
 # Main #########################################################################
 print(logo)
@@ -150,8 +139,12 @@ def main(player):
         shop(player)
 
     elif main_input == 4:
-        delay_print("\nThanks for playing!\n")
-        time.sleep(2)
+        pygame.mixer.music.fadeout(4000)
+        time.sleep(1)
+        os.system("clear")
+        goodbye_message()
+        pokeball_art()
+        time.sleep(4)
         quit()
     
     else:
@@ -166,8 +159,6 @@ def battle(player):
     blastoise = Pokemon("Blastoise",200, 20)
     mewtwo = Pokemon('Mewtwo', 200, 25)
     squirtle = Pokemon('Squirtle', 200, 25)
-
-    # characters = [" ", charizard, blastoise, mewtwo, squirtle]
 
     opponent_list = [charizard, blastoise, mewtwo, squirtle]
     opponent = random.choice(opponent_list)
@@ -350,33 +341,52 @@ def battle(player):
             delay_print("Please type in a number 1 - 4")
 
 # Medic #########################################################################
+
 def medic(player):
     os.system("clear")
-    logo()
-    print("%s health is at %s/200." % (player.name, player.health))
+    nurse_joy()
+    print("%s's health is at %s/200." % (player.name, player.health))
     print("\nHello, and welcome to the Pokemon Center!\nWe restore your tired Pokemon to full health.\nDo you want to heal %s? \n(yes/no)" % (player.name))
-    # print("%s's health is %s" % (player.name, player.health))
+
     medic_input = input("")
     lower_medic_input = medic_input.lower()
-    if lower_medic_input == "yes":
-        player.health = 200
-        print("%s is at full health." % (player.name))
-        time.sleep(2)
-        os.system("clear")
-        logo()
-        main(player)
-    elif lower_medic_input == "no":
-        print("%s looks tired. :( Are you sure? " % (player.name))
-        second_chance = input("")
-        if second_chance == "yes":
-            main(player)
-        else:
-            player.health = 100
+    medic_running = True
+    while medic_running:
+        if lower_medic_input == "yes":
+            player.health = 200
+            time.sleep(2)
             print("%s is at full health." % (player.name))
-    else:
-        print("Please type yes or no.")
+            medic_running = False
+            
+        elif lower_medic_input == "no":
+            print("%s looks tired. :( Are you sure? " % (player.name))
+            second_chance = input("")
+            second_chance_lower = second_chance.lower()
+            if second_chance_lower == "yes":
+                medic_running = False
+            elif second_chance_lower == "no":
+                player.health = 100
+                print("%s is at full health." % (player.name))
+                medic_running = False
+            
+            else:
+                print("Please type yes or no.")
+                time.sleep(2)
+                os.system("clear")
+                medic(player)
+        else:
+            print("Please type yes or no.")
+            time.sleep(2)
+            os.system("clear")
+            medic(player)
+            
+    time.sleep(2)
+    os.system("clear")
+    logo()
+    main(player)
         
 # Shop #########################################################################
+
 def shop(player):
     os.system("clear")
     logo()
