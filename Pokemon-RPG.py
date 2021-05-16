@@ -64,9 +64,9 @@ def menu_launch():
     os.system('clear')
     logo()
     starter_pokemon = {
-    1: Charmander("Charmander", 200, 50),
-    2: Squirtle("Squirtle", 200, 40),
-    3: Bulbasaur("Bulbasaur", 200, 45),
+    1: Charmander("Charmander", 100, 35),
+    2: Squirtle("Squirtle", 100, 35),
+    3: Bulbasaur("Bulbasaur", 100, 35),
     }
     
     user_name = input("What is your name young trainer? ")
@@ -155,10 +155,10 @@ def main(player):
 # Battle #########################################################################
 def battle(player):
 
-    charizard = Pokemon("Charizard", 200, 20)
-    blastoise = Pokemon("Blastoise",200, 20)
-    mewtwo = Pokemon('Mewtwo', 200, 25)
-    squirtle = Pokemon('Squirtle', 200, 25)
+    charizard = Pokemon("Charizard", 100, 25)
+    blastoise = Pokemon("Blastoise",100, 30)
+    mewtwo = Pokemon('Mewtwo', 200, 50)
+    squirtle = Pokemon('Squirtle', 100, 20)
 
     opponent_list = [charizard, blastoise, mewtwo, squirtle]
     opponent = random.choice(opponent_list)
@@ -220,7 +220,7 @@ def battle(player):
             else:
                 player.health -= opponent.attack
                 delay_print("%s defended itself, but it failed." % (player.name)) 
-                delay_print("%s health is: %d" % (player.name, player.health))
+                delay_print("%s's health is: %d" % (player.name, player.health))
                 time.sleep(2)
         
         elif action == '3':
@@ -244,7 +244,7 @@ def battle(player):
                     time.sleep(1)
                     delay_print(str("%s health has decreased to %d" % (opponent.name, opponent.health)))
                     
-                    if opponent.name is "Mewtwo":
+                    if opponent.name == "Mewtwo":
                         if opponent.health <= 40:
                             opponent.health += 100
                             delay_print("Mewtwo steps back and finds his strength!")
@@ -345,7 +345,7 @@ def battle(player):
 def medic(player):
     os.system("clear")
     nurse_joy()
-    print("%s's health is at %s/200." % (player.name, player.health))
+    print("%s's health is at %s/100." % (player.name, player.health))
     print("\nHello, and welcome to the Pokemon Center!\nWe restore your tired Pokemon to full health.\nDo you want to heal %s? \n(yes/no)" % (player.name))
 
     medic_input = input("")
@@ -353,7 +353,7 @@ def medic(player):
     medic_running = True
     while medic_running:
         if lower_medic_input == "yes":
-            player.health = 200
+            player.health = 100
             time.sleep(2)
             print("%s is at full health." % (player.name))
             medic_running = False
