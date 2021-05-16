@@ -10,13 +10,17 @@ import sys
 
 #Basic class and subclasses for testing purposes
 
+
 item_inventory = []
+
+#Basic class and subclasses for testing purposes
 
 class Pokemon:
     def __init__(self, name, health, attack):
         self.name = name
         self.health = health
         self.bounty = 50
+
         self.attack = attack
         # self.secondary_attack = secondary_attack
         # self.special_attack = special_attack
@@ -44,6 +48,7 @@ class Gyarados(Pokemon):
 class Mewtwo(Pokemon):
     def print_status(self):
         print("%s has %d health and %d power" % (self.name, self.health, self.power))
+
     def alive(self): 
         return True
 
@@ -92,6 +97,7 @@ def menu_launch():
     # print(user_input)
 
     user_name = None
+
     player = None
     running = True
     while running:
@@ -108,6 +114,7 @@ def menu_launch():
     
         else:
             print("Please choose a number 1 - 3.")
+
         time.sleep(2)
         delay_print(str("What an excellent choice!! Take care of %s for us!" % (player.name)))
         time.sleep(5)
@@ -134,12 +141,14 @@ def main(player):
         time.sleep(3)
         delay_print("\nA wild pokemon appears!")
         time.sleep(2)
+
         battle(player)
     elif main_input == 2:
         medic(player)
         # medic(player)
     elif main_input == 3:
         shop(player)
+
     elif main_input == 4:
         delay_print("\nThanks for playing!\n")
         time.sleep(2)
@@ -464,12 +473,12 @@ Yes or No:
             print("I do not understand. Did you say yes or no?")
         shop(player)
 
+
     if shop_input == 5:
         os.system("clear")
         logo()
         print("\nThank you for stopping by!")
         time.sleep(2)
-
         main(player)
     shop(player)
 

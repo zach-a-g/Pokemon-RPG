@@ -150,31 +150,3 @@ def start_battle():
             
             else:
                 print("Please enter a valid option.")
-    
-
-            
-        
-
-
-        
-    
-    # elif user_input == '2':
-    #     print(logo)
-    #     print(store_page)
-    #     user_input = input()
-    #     # os.system('clear')
-
-    # elif user_input == '3':
-    #     print(logo)
-    #     print(medic_page)
-    #     user_input = input('Yes or No: ')
-    #     # os.system('clear')
-    #     if user_input == 'Yes' or 'yes':
-    #         print('%s is all healed. Feel free to drop by anytime' % (poke.name))    
-    #     else:
-    #         if user_input == 'No' or 'no':
-    #             print("""%s looks tired. :( Are you sure?.""" % (poke.name))
-    # else:
-    #     # os.system('clear')
-    #     print(logo)
-    #     print('Invalid Input. Choose from the on screen selection.')    
