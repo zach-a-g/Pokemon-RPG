@@ -156,8 +156,11 @@ def battle(player):
     blastoise = Pokemon("Blastoise",100, 30, 'Water', ['Water Pulse', 'Rain Dance', 'Shell Smash'])
     mewtwo = Pokemon('Mewtwo', 200, 50, 'Psychic', ['Confusion', 'Ancient Power', 'Psystrike'])
     squirtle = Pokemon('Squirtle', 100, 20, 'Water', ['Tackle', 'Water Gun', 'Hydro Pump'])
+    charmander = Pokemon("Charmander", 100, 35, 'Fire', ['Scratch', 'Ember', 'Dragon Breath'])
+    bulbasaur = Pokemon("Bulbasaur", 100, 35, 'Grass', ['Vine Whip', 'Razor Leaf', 'Solar Beam'])
 
-    opponent_list = [charizard, blastoise, mewtwo, squirtle]
+
+    opponent_list = [charizard, blastoise, squirtle, mewtwo, bulbasaur, charmander]
     opponent = random.choice(opponent_list)
     battle = True
     fullDMG = player.attack * player.typemultiplier[player.type][opponent.type]
@@ -211,7 +214,7 @@ def battle(player):
         string_2_attack = '\nMewtwo is King!'
 
     elif opponent.type == 'Psychic' and player.type == 'Grass':
-        string_1_attack = '\nMewtwo is OP, you should have fled.s..'
+        string_1_attack = '\nMewtwo is OP, you should have fled...'
         string_2_attack = '\nMewtwo is King!'
             
     # Wild Pokemon is WEAK
@@ -294,7 +297,14 @@ def battle(player):
                 player.health -= oppDMG
                 delay_print("""\n%s's health is now %d""" % (player.name, player.health))
                 time.sleep(2)
-            
+                if player.health <= 0:
+                    delay_print("\n%s has fainted!" % player.name)
+                    # print("%s dropped %d coins!" % opponent.name, random.randrange(20, 100))
+                    time.sleep(3)
+                    main(player)
+                else:
+                    pass
+
             else:
                 delay_print("\nPlease enter a valid option.")
         
@@ -308,6 +318,13 @@ def battle(player):
                 player.health -= oppDMG
                 delay_print("%s defended itself, but it failed." % (player.name)) 
                 delay_print("%s's health is: %d" % (player.name, player.health))
+                if player.health <= 0:
+                    delay_print("\n%s has fainted!" % player.name)
+                    # print("%s dropped %d coins!" % opponent.name, random.randrange(20, 100))
+                    time.sleep(3)
+                    main(player)
+                else:
+                    pass
                 time.sleep(2)
         
         elif action == '3':
@@ -356,7 +373,13 @@ def battle(player):
                         player.health -= oppDMG
                         delay_print("""\n%s's health is now %d""" % (player.name, player.health))
                         time.sleep(2)
-                
+                        if player.health <= 0:
+                            delay_print("\n%s has fainted!" % player.name)
+                            # print("%s dropped %d coins!" % opponent.name, random.randrange(20, 100))
+                            time.sleep(3)
+                            main(player)
+                        else: 
+                            pass
                 else:
                     time.sleep(2)
                     delay_print("Crit Potion seems uneffective.....")
@@ -386,6 +409,13 @@ def battle(player):
                         player.health -= oppDMG
                         delay_print("""\n%s's health is now %d""" % (player.name, player.health))
                         time.sleep(2)
+                        if player.health <= 0:
+                            delay_print("\n%s has fainted!" % player.name)
+                            # print("%s dropped %d coins!" % opponent.name, random.randrange(20, 100))
+                            time.sleep(3)
+                            main(player)
+                        else:
+                            pass
                     
             elif lower_selection == "pokeball":
                 catch_chance = random.randrange(1, 10)
