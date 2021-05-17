@@ -1,7 +1,7 @@
 import random
 import pygame
 from random import randint
-from pokemon_art import bulbasaur_art, charmander_art, pokeball_art, squirtle_art, logo, pokeball_art, goodbye_message, professor_oak, nurse_joy
+from pokemon_art import bulbasaur_art, charmander_art, pokeball_art, squirtle_art, logo, pokeball_art, goodbye_message, professor_oak, nurse_joy, squirtle_squad, pokeball_art2, shades3
 import os
 import time
 import sys
@@ -140,7 +140,9 @@ def main(player):
         time.sleep(1)
         os.system("clear")
         goodbye_message()
-        pokeball_art()
+        #pokeball_art2()
+        shades3()
+        squirtle_squad()
         time.sleep(4)
         quit()
     else:
@@ -263,7 +265,7 @@ def battle(player):
         if action == '1' and player.health > 0:
             time.sleep(1)
             delay_print("%s health is %d." % (player.name, player.health))
-            delay_print("\n%s health is %d." % (opponent.name, opponent.health))
+            delay_print("\nEnemy %s health is %d." % (opponent.name, opponent.health))
             #time.sleep(1)
             for i, x in enumerate(player.moves):
                 print(f"\n\n{i+1}.", x)
@@ -288,17 +290,17 @@ def battle(player):
             
             if opponent.alive():
                 print("""\n===============================================================\n""")
-                delay_print("It's your enemy's turn to attack.")
+                delay_print("It's your enemy's turn to attack.\n \n")
                 # for n in version[opponent.moves]:
-                print("\n %s used %s!" % (opponent.name, opponent.moves[index-1]))
+                print("%s used %s!" % (opponent.name, opponent.moves[index-1]))
                 time.sleep(1)
                 print(string_2_attack)
                 time.sleep(1)
                 player.health -= oppDMG
-                delay_print("""\n%s's health is now %d""" % (player.name, player.health))
+                delay_print("""\n \n%s's health is now %d""" % (player.name, player.health))
                 time.sleep(2)
                 if player.health <= 0:
-                    delay_print("\n%s has fainted!" % player.name)
+                    delay_print("\n \n%s has fainted!" % player.name)
                     # print("%s dropped %d coins!" % opponent.name, random.randrange(20, 100))
                     time.sleep(3)
                     main(player)
@@ -311,15 +313,15 @@ def battle(player):
         elif action == '2':
             random.randrange(1, 4)
             if random.random() <= 0.5:
-                print("%s defended itself and took no damage." % (player.name))
+                print("\n%s defended itself and took no damage." % (player.name))
                 time.sleep(1)
 
             else:
                 player.health -= oppDMG
-                delay_print("%s defended itself, but it failed." % (player.name)) 
-                delay_print("%s's health is: %d" % (player.name, player.health))
+                delay_print("%s defended itself, but it failed.\n " % (player.name)) 
+                delay_print("\n%s's health is: %d" % (player.name, player.health))
                 if player.health <= 0:
-                    delay_print("\n%s has fainted!" % player.name)
+                    delay_print("\n \n%s has fainted!" % player.name)
                     # print("%s dropped %d coins!" % opponent.name, random.randrange(20, 100))
                     time.sleep(3)
                     main(player)
@@ -407,7 +409,7 @@ def battle(player):
                         delay_print("It's your enemy's turn to attack.")
                         time.sleep(1)
                         player.health -= oppDMG
-                        delay_print("""\n%s's health is now %d""" % (player.name, player.health))
+                        delay_print("""\n%s's health is now %d\n""" % (player.name, player.health))
                         time.sleep(2)
                         if player.health <= 0:
                             delay_print("\n%s has fainted!" % player.name)
@@ -422,9 +424,9 @@ def battle(player):
                 if catch_chance <= 3:
                     time.sleep(3)
                     pokeball_art
-                    delay_print("!!!POKEBALL WAS SUCCESSFULL!!!")
+                    delay_print("!!!POKEBALL WAS SUCCESSFULL!!!\n")
                     time.sleep(1)
-                    delay_print("You caught a %s!" % opponent.name)
+                    delay_print("\nYou caught a %s!" % opponent.name)
                     time.sleep(3)
                     main(player)
                 else:
@@ -439,7 +441,7 @@ def battle(player):
                     pokeball_art()
                     delay_print("!!!MASTER POKEBALL WAS SUCCESSFULL!!!\n")
                     time.sleep(1)
-                    delay_print("You caught a %s!" % opponent.name)
+                    delay_print("\nYou caught a %s!" % opponent.name)
                     time.sleep(3)
                     main(player)
                 else:
@@ -463,7 +465,7 @@ def medic(player):
     os.system("clear")
     nurse_joy()
     print("%s's health is at %s/100." % (player.name, player.health))
-    print("\nHello, and welcome to the Pokemon Center!\nWe restore your tired Pokemon to full health.\nDo you want to heal %s? \n(yes/no)" % (player.name))
+    print("\nHello, and welcome to the Pokemon Center!\nWe restore your tired Pokemon to full health.\n \nDo you want to heal %s? \n(yes/no)" % (player.name))
 
     medic_input = input("")
     lower_medic_input = medic_input.lower()
@@ -472,11 +474,11 @@ def medic(player):
         if lower_medic_input == "yes":
             player.health = 100
             time.sleep(2)
-            print("%s is at full health." % (player.name))
+            print("\n%s is at full health." % (player.name))
             medic_running = False
             
         elif lower_medic_input == "no":
-            print("%s looks tired. :( Are you sure? " % (player.name))
+            print("\n%s looks tired. :( Are you sure? " % (player.name))
             second_chance = input("")
             second_chance_lower = second_chance.lower()
             if second_chance_lower == "yes":
@@ -519,8 +521,8 @@ def shop(player):
     if shop_input == 1:
         os.system("clear")
         logo()
-        print("""\n Health Potion:
-\nThis potion can be used to heal your pokemon by 40 health.
+        print("""\nHealth Potion:\n
+\nThis potion can be used to heal your pokemon by 40 health.\n
 \nWould you like to purchase this item?
 Yes or No:
 """)
@@ -540,8 +542,8 @@ Yes or No:
     if shop_input == 2:
         os.system("clear")
         logo()
-        print("""\n Crit Potion:
-\nThis potion gives you a 30% chance to land a critical hit on\nyour next attack.
+        print("""\nCrit Potion:\n
+\nThis potion gives you a 30% chance to land a critical hit on\nyour next attack.\n
 \nWould you like to purchase this item?
 Yes or No:
 """)
@@ -561,8 +563,8 @@ Yes or No:
     if shop_input == 3:
         os.system("clear")
         logo()
-        print("""\n Pokeball:
-\nPokeballs give you a 20% chance to catch pokemon once they \nare weak enough.
+        print("""\nPokeball:\n
+\nPokeballs give you a 20% chance to catch pokemon once they \nare weak enough.\n
 \nWould you like to purchase this item?
 Yes or No:
 """)
@@ -582,8 +584,8 @@ Yes or No:
     if shop_input == 4:
         os.system("clear")
         logo()
-        print("""\n Master Pokeball:
-\nMaster Pokeballs give you a 70% chance to catch pokemon once \nthey are weak enough.
+        print("""\nMaster Pokeball:\n
+\nMaster Pokeballs give you a 70% chance to catch pokemon once \nthey are weak enough.\n
 \nWould you like to purchase this item?
 Yes or No:
 """)
