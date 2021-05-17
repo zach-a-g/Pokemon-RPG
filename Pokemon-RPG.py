@@ -1,15 +1,11 @@
-
 import random
-# from items import Item, Crit_Potion, Pokeball, Master_Pokeball, Health
 from random import randint
-from pokemon_art import bulbasaur_art, charmander_art, pokeball_art, squirtle_art, logo
+from pokemon_art import bulbasaur_art, charmander_art, goodbye_message, pokeball_art, squirtle_art, logo
 import os
 import time
 import sys
 
 # POKEMON CLASSES ####################################################################
-
-#Basic class and subclasses for testing purposes
 
 item_inventory = []
 
@@ -95,6 +91,7 @@ def menu_launch():
     user_name = None
     player = None
     running = True
+    
     while running:
         pokemon_choice = int(input("Who do you choose? "))
         if pokemon_choice == 1:
@@ -106,13 +103,12 @@ def menu_launch():
         elif pokemon_choice == 3:
             player = starter_pokemon[3]
             bulbasaur_art()
-    
         else:
             print("Please choose a number 1 - 3.")
+
         time.sleep(2)
         delay_print(str("What an excellent choice!! Take care of %s for us!" % (player.name)))
         time.sleep(5)
-        #Tests the selection above - delete later
         #print(player.__dict__)
         running = False
         main(player)
@@ -142,10 +138,9 @@ def main(player):
     elif main_input == 3:
         shop(player)
     elif main_input == 4:
-        delay_print("\nThanks for playing!\n")
+        goodbye_message()
         time.sleep(2)
         quit()
-    
     else:
         delay_print("Not a valid input. Please select 1-4")
         time.sleep(1)
@@ -470,8 +465,6 @@ Yes or No:
         logo()
         print("\nThank you for stopping by!")
         time.sleep(2)
-
         main(player)
-    shop(player)
 
 menu_launch()
