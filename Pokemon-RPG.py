@@ -12,14 +12,14 @@ from audio import classic_intro
 item_inventory = []
 
 class Pokemon:
-    def __init__(self, name, health, attack, types, moves):
+    typemultiplier = {'Fire': {'Fire': 0.5, 'Water': 0.5, 'Grass': 2.0, 'Psychic': 0.5}, 'Water': {'Fire': 2.0, 'Water': 0.5, 'Grass': 0.5, 'Psychic': 0.5}, 'Grass': {'Fire': 0.5, 'Water': 2.0, 'Grass': 0.5, 'Psychic': 0.5}, 'Psychic': {'Fire': 2.0, 'Water': 2.0, 'Grass': 2.0, 'Psychic': 0.5}}
+    def __init__(self, name, health, attack, type, moves):
         self.name = name
         self.health = health
-        self.bounty = 50
         self.attack = attack
-        self.types = types
+        self.type = type
         self.moves = moves
-
+        self.bounty = 50
         # self.secondary_attack = secondary_attack
         # self.special_attack = special_attack
     
@@ -150,235 +150,282 @@ def main(player):
 
 # Battle #########################################################################
 def battle(player):
+    
 
-     charizard = Pokemon("Charizard", 100, 25, 'Fire', ['Dragon Claw', 'Heat Wave', 'Fire Spin'])
-     blastoise = Pokemon("Blastoise",100, 30, 'Water', ['Water Pulse', 'Rain Dance', 'Shell Smash'])
-     mewtwo = Pokemon('Mewtwo', 200, 50, 'Psychic', ['Confusion', 'Ancient Power', 'Psystrike'])
-     squirtle = Pokemon('Squirtle', 100, 20, 'Water', ['Tacke', 'Water Gun', 'Hydro Pump'])
+    charizard = Pokemon("Charizard", 100, 25, 'Fire', ['Dragon Claw', 'Heat Wave', 'Fire Spin'])
+    blastoise = Pokemon("Blastoise",100, 30, 'Water', ['Water Pulse', 'Rain Dance', 'Shell Smash'])
+    mewtwo = Pokemon('Mewtwo', 200, 50, 'Psychic', ['Confusion', 'Ancient Power', 'Psystrike'])
+    squirtle = Pokemon('Squirtle', 100, 20, 'Water', ['Tackle', 'Water Gun', 'Hydro Pump'])
 
-     opponent_list = [mewtwo, charizard, blastoise, squirtle]
-     opponent = random.choice(opponent_list)
-     battle = True
+    opponent_list = [charizard, blastoise, mewtwo, squirtle]
+    opponent = random.choice(opponent_list)
+    battle = True
+    fullDMG = player.attack * player.typemultiplier[player.type][opponent.type]
+    oppDMG = opponent.attack * opponent.typemultiplier[opponent.type][player.type]
+ 
+# Consider types advantages
+    # version = ['Fire', 'Water', 'Grass', 'Psychic']
+# def type(type1, type2):
+    # Both Pokemon are the same type
+    if player.type == 'Fire' and opponent.type == 'Fire':
+        string_1_attack = '\nIts not very effective...'
+        string_2_attack = '\nIts not very effective...'
+    
+    elif player.type == 'Water' and opponent.type == 'Water':
+        string_1_attack = '\nIts not very effective...'
+        string_2_attack = '\nIts not very effective...'
 
-     # Consider types advantages
-     version = ['Fire', 'Water', 'Grass', 'Psychic']
-     for i,k in enumerate(version):
-         if player.types == k:
-             string_1_attack = '\nIts not very effective...'
-             string_2_attack = '\nIts not very effective...'
-             # Both are same type
-             if opponent.types == k:
-                 # string_1_attack = '\nIts not very effective...'
-                 # string_2_attack = '\nIts not very effective...'
+    elif player.type == 'Grass' and opponent.type == 'Grass':
+        string_1_attack = '\nIts not very effective...'
+        string_2_attack = '\nIts not very effective...'
 
-             # Pokemon2 is STRONG
-                 if opponent.types == version[(i+1)%3]:
-                     opponent.attack *= 2
-                     player.attack /= 2
-                     string_1_attack = '\nIts not very effective...'
-                     string_2_attack = '\nIts super effective!'
+    elif player.type == 'Psychic' and opponent.type == 'Psychic':
+        string_1_attack = '\nIts not very effective...'
+        string_2_attack = '\nIts not very effective...'
 
-             # Pokemon2 is WEAK
-             if opponent.types == version[(i+2)%3]:
-                 player.attack *= 2
-                 opponent.attack /= 2
-                 string_1_attack = '\nIts super effective!'
-                 string_2_attack = '\nIts not very effective...'
+    # # Wild Pokemon is STRONG
+    if opponent.type == 'Water' and player.type == 'Fire':
+    #     opponent.attack *= 2
+    #     player.attack /= 2
+        string_1_attack = '\nIts not very effective...'
+        string_2_attack = '\nIts super effective!'
+    
+    elif opponent.type == 'Grass' and player.type == 'Water':
+    #     type2.attack *= 2
+    #     type1.attack /= 2
+        string_1_attack = '\nIts not very effective...'
+        string_2_attack = '\nIts super effective!'
 
-             # Mewtwo only
-             if opponent == mewtwo:
-             #if opponent.types == version[(i+3)%3]:
-                 opponent.attack *= 2
-                 player.attack /= 2
-                 string_1_attack = '\nMewtwo is OP, you should have fled.'
-                 string_2_attack = '\nMewtwo is King!'    
+    elif opponent.type == 'Fire' and player.type == 'Grass':
+    #     type2.attack *= 2
+    #     type1.attack /= 2
+        string_1_attack = '\nIts not very effective...'
+        string_2_attack = '\nIts super effective!'
 
-     while battle:
-         # delay_print("\nA wild %s appears!" % opponent.name) 
-         time.sleep(3)
-         print("")
-       # Launch into battle sequence here
-         os.system('clear')
-         logo()
-         print(str("%s health is at %s" % (player.name, player.health)))
-         print(str("Enemy %s health is at %s" % (opponent.name, opponent.health)))
-         action = input("""\n                  What would you like to do?
-                          1.Attack
-                          2.Defend
-                          3.Use an item
-                          4.Flee
-                          """)
-         time.sleep(1)
-         if action == '1' and player.health > 0:
-             time.sleep(1)
-             delay_print("%s health is %d." % (player.name, player.health))
-             delay_print("\n%s health is %d." % (opponent.name, opponent.health))
-             #time.sleep(1)
-             for i, x in enumerate(player.moves):
-                 print(f"\n{i+1}.", x)
-             index = int(input('\nPick a move: '))
-             print("%s used %s!" % (player.name, player.moves[index-1]))
-             time.sleep(1)
-             print(string_1_attack)
-             delay_print("\n%s attacked %s for %s damage." % (player.name, opponent.name, player.attack))
-             time.sleep(1)
-             print(' ')
-             opponent.health -= player.attack 
-             delay_print(str("\nEnemy %s's health has decreased to %d." % (opponent.name, opponent.health)))
-             time.sleep(2)
-             #Add statement to make value 0 to avoid negative health
-             if opponent.health <= 0:
-                 delay_print("\n%s has fainted!" % opponent.name)
-                 # print("%s dropped %d coins!" % opponent.name, random.randrange(20, 100))
-                 time.sleep(3)
-                 main(player)
-             else:
-                 pass
+    elif opponent.type == 'Psychic' and player.type == 'Fire':
+        string_1_attack = '\nMewtwo is OP, you should have fled...'
+        string_2_attack = '\nMewtwo is King!'
 
-             if opponent.alive():
-                 print("""\n===============================================================\n""")
-                 delay_print("It's your enemy's turn to attack.")
-                 for i, x in enumerate(opponent.moves):
-                     print(f"\n{i+1}.", x)
-                 print("\n %s used %s!" % (opponent.name, opponent.moves[index-1]))
-                 time.sleep(1)
-                 print(string_2_attack)
-                 time.sleep(1)
-                 player.health -= opponent.attack
-                 delay_print("""\n%s's health is now %d""" % (player.name, player.health))
-                 time.sleep(2)
+    elif opponent.type == 'Psychic' and player.type == 'Water':
+        string_1_attack = '\nMewtwo is OP, you should have fled...'
+        string_2_attack = '\nMewtwo is King!'
 
-             else:
-                 delay_print("\nPlease enter a valid option.")
+    elif opponent.type == 'Psychic' and player.type == 'Grass':
+        string_1_attack = '\nMewtwo is OP, you should have fled.s..'
+        string_2_attack = '\nMewtwo is King!'
+            
+    # Wild Pokemon is WEAK
+    if opponent.type == 'Fire' and player.type == 'Water':
+    #     type1.attack *= 2
+    #     type2.attack /= 2
+        string_1_attack = '\nIts super effective!'
+        string_2_attack = '\nIts not very effective...'
 
-         elif action == '2':
-             random.randrange(1, 4)
-             if random.random() <= 0.5:
-                 print("%s defended itself and took no damage." % (player.name))
-                 time.sleep(1)
+    if opponent.type == 'Water' and player.type == 'Grass':
+    #     type1.attack *= 2
+    #     type2.attack /= 2
+        string_1_attack = '\nIts super effective!'
+        string_2_attack = '\nIts not very effective...'
 
-             else:
-                 player.health -= opponent.attack
-                 delay_print("%s defended itself, but it failed." % (player.name)) 
-                 delay_print("%s's health is: %d" % (player.name, player.health))
-                 time.sleep(2)
+    elif opponent.type == 'Grass' and player.type == 'Fire':
+    #     type1.attack *= 2
+    #     type2.attack /= 2
+        string_1_attack = '\nIts super effective!'
+        string_2_attack = '\nIts not very effective...'    
 
-         elif action == '3':
-             print("\nInventory of Items:")
-             print(*item_inventory, sep = "\n")
-             delay_print("\nWhich item would you like to use? ")
-             selection = input("")
-             lower_selection = selection.lower()
-             if lower_selection == "health":
-                 player.health += 40
-                 print("%s health has gone up 40!" % player.name)
-                 print(player.health)
-                 time.sleep(2)
+    # # Mewtwo only
+    if type == 'Psychic':
+    #     type2.attack *= 2
+    #     type1.attack /= 2
+        string_1_attack = '\nMewtwo is OP, you should have fled.'
+        string_2_attack = '\nMewtwo is King!'    
 
-             elif lower_selection == "crit potion":
-                 crit_chance = random.randrange(1, 10)
-                 if crit_chance <= 4:
-                     opponent.health -= player.attack + 20
-                     time.sleep(2)
-                     delay_print("!!!CRITICAL HIT!!!\n")
-                     time.sleep(1)
-                     delay_print(str("%s health has decreased to %d" % (opponent.name, opponent.health)))
+    while battle:
+        # delay_print("\nA wild %s appears!" % opponent.name) 
+        time.sleep(3)
+        print("")
+      # Launch into battle sequence here
+        os.system('clear')
+        logo()
+        print("Go %s!" % (player.name))
+        print(str("%s health is at %s" % (player.name, player.health)))
+        print(str("Enemy %s health is at %s" % (opponent.name, opponent.health)))
+        action = input("""\n                  What would you like to do?
+                         1.Attack
+                         2.Defend
+                         3.Use an item
+                         4.Flee
+                         """)
+        time.sleep(1)
+        if action == '1' and player.health > 0:
+            time.sleep(1)
+            delay_print("%s health is %d." % (player.name, player.health))
+            delay_print("\n%s health is %d." % (opponent.name, opponent.health))
+            #time.sleep(1)
+            for i, x in enumerate(player.moves):
+                print(f"\n\n{i+1}.", x)
+            index = int(input('\nPick a move: '))
+            print("%s used %s!" % (player.name, player.moves[index-1]))
+            time.sleep(1)
+            print(string_1_attack)
+            delay_print("\n%s attacked %s for %s damage." % (player.name, opponent.name, fullDMG))
+            time.sleep(1)
+            print(' ')
+            opponent.health -= fullDMG 
+            delay_print(str("\nEnemy %s's health has decreased to %d." % (opponent.name, opponent.health)))
+            time.sleep(2)
+            #Add statement to make value 0 to avoid negative health
+            if opponent.health <= 0:
+                delay_print("\n%s has fainted!" % opponent.name)
+                # print("%s dropped %d coins!" % opponent.name, random.randrange(20, 100))
+                time.sleep(3)
+                main(player)
+            else:
+                pass
+            
+            if opponent.alive():
+                print("""\n===============================================================\n""")
+                delay_print("It's your enemy's turn to attack.")
+                # for n in version[opponent.moves]:
+                print("\n %s used %s!" % (opponent.name, opponent.moves[index-1]))
+                time.sleep(1)
+                print(string_2_attack)
+                time.sleep(1)
+                player.health -= oppDMG
+                delay_print("""\n%s's health is now %d""" % (player.name, player.health))
+                time.sleep(2)
+            
+            else:
+                delay_print("\nPlease enter a valid option.")
+        
+        elif action == '2':
+            random.randrange(1, 4)
+            if random.random() <= 0.5:
+                print("%s defended itself and took no damage." % (player.name))
+                time.sleep(1)
 
-                     if opponent.name == "Mewtwo":
-                         if opponent.health <= 40:
-                             opponent.health += 100
-                             delay_print("Mewtwo steps back and finds his strength!")
-                             delay_print("Mewtwo's health is now at %s." % opponent.health)
-                         else:
-                             pass
-                     else:
-                         pass
+            else:
+                player.health -= oppDMG
+                delay_print("%s defended itself, but it failed." % (player.name)) 
+                delay_print("%s's health is: %d" % (player.name, player.health))
+                time.sleep(2)
+        
+        elif action == '3':
+            print("\nInventory of Items:")
+            print(*item_inventory, sep = "\n")
+            delay_print("\nWhich item would you like to use? ")
+            selection = input("")
+            lower_selection = selection.lower()
+            if lower_selection == "health":
+                player.health += 40
+                print("%s health has gone up 40!" % player.name)
+                print(player.health)
+                time.sleep(2)
+            
+            elif lower_selection == "crit potion":
+                crit_chance = random.randrange(1, 10)
+                if crit_chance <= 4:
+                    opponent.health -= fullDMG + 20
+                    time.sleep(2)
+                    delay_print("!!!CRITICAL HIT!!!\n")
+                    time.sleep(1)
+                    delay_print(str("%s health has decreased to %d" % (opponent.name, opponent.health)))
+                    
+                    if opponent.name == "Mewtwo":
+                        if opponent.health <= 40:
+                            opponent.health += 100
+                            delay_print("Mewtwo steps back and finds his strength!")
+                            delay_print("Mewtwo's health is now at %s." % opponent.health)
+                        else:
+                            pass
+                    else:
+                        pass
 
-                     if opponent.health <= 0:
-                         delay_print("\n%s has fainted!" % opponent.name)
+                    if opponent.health <= 0:
+                        delay_print("\n%s has fainted!" % opponent.name)
+                    # print("%s dropped %d coins!" % opponent.name, random.randrange(20, 100))
+                        time.sleep(2)
+                        main(player)
+                    else:
+                        pass
+            
+                    if opponent.health > 0:
+                        print("""\n===============================================================\n""")
+                        delay_print("It's your enemy's turn to attack.")
+                        time.sleep(1)
+                        player.health -= oppDMG
+                        delay_print("""\n%s's health is now %d""" % (player.name, player.health))
+                        time.sleep(2)
+                
+                else:
+                    time.sleep(2)
+                    delay_print("Crit Potion seems uneffective.....")
+                    time.sleep(1)
+                    opponent.health -= fullDMG 
+                    delay_print(str("\n%s's health has decreased to %d." % (opponent.name, opponent.health)))
+                    time.sleep(2)
+                    if opponent.name == "Mewtwo" and opponent.health <= 40:
+                        opponent.health += 100
+                        delay_print("Mewtwo steps back and finds his strength!")
+                        delay_print("Mewtwo's health is now at %s." % opponent.health)
+                    else:
+                        pass
+                    
+                    if opponent.health <= 0:
+                        delay_print("\n%s has fainted!" % opponent.name)
                      # print("%s dropped %d coins!" % opponent.name, random.randrange(20, 100))
-                         time.sleep(2)
-                         main(player)
-                     else:
-                         pass
+                        time.sleep(2)
+                        main(player)
+                    else:
+                        pass
+            
+                    if opponent.health > 0:
+                        print("""\n===============================================================\n""")
+                        delay_print("It's your enemy's turn to attack.")
+                        time.sleep(1)
+                        player.health -= oppDMG
+                        delay_print("""\n%s's health is now %d""" % (player.name, player.health))
+                        time.sleep(2)
+                    
+            elif lower_selection == "pokeball":
+                catch_chance = random.randrange(1, 10)
+                if catch_chance <= 3:
+                    time.sleep(3)
+                    pokeball_art
+                    delay_print("!!!POKEBALL WAS SUCCESSFULL!!!")
+                    time.sleep(1)
+                    delay_print("You caught a %s!" % opponent.name)
+                    time.sleep(3)
+                    main(player)
+                else:
+                    time.sleep(2)
+                    delay_print("Pokeball seems uneffective.....")
+                    time.sleep(1)
+                    
+            elif lower_selection == "master pokeball":
+                catch_chance = random.randrange(1, 10)
+                if catch_chance <= 7:
+                    time.sleep(3)
+                    pokeball_art()
+                    delay_print("!!!MASTER POKEBALL WAS SUCCESSFULL!!!\n")
+                    time.sleep(1)
+                    delay_print("You caught a %s!" % opponent.name)
+                    time.sleep(3)
+                    main(player)
+                else:
+                    time.sleep(2)
+                    delay_print("Master Pokeball seems uneffective.....")
+                    time.sleep(1)
+            else:
+                print("Item not found.")
 
-                     if opponent.health > 0:
-                         print("""\n===============================================================\n""")
-                         delay_print("It's your enemy's turn to attack.")
-                         time.sleep(1)
-                         player.health -= opponent.attack
-                         delay_print("""\n%s's health is now %d""" % (player.name, player.health))
-                         time.sleep(2)
-
-                 else:
-                     time.sleep(2)
-                     delay_print("Crit Potion seems uneffective.....")
-                     time.sleep(1)
-                     opponent.health -= player.attack 
-                     delay_print(str("\n%s's health has decreased to %d." % (opponent.name, opponent.health)))
-                     time.sleep(2)
-                     if opponent.name == "Mewtwo" and opponent.health <= 40:
-                         opponent.health += 100
-                         delay_print("Mewtwo steps back and finds his strength!")
-                         delay_print("Mewtwo's health is now at %s." % opponent.health)
-                     else:
-                         pass
-
-                     if opponent.health <= 0:
-                         delay_print("\n%s has fainted!" % opponent.name)
-                      # print("%s dropped %d coins!" % opponent.name, random.randrange(20, 100))
-                         time.sleep(2)
-                         main(player)
-                     else:
-                         pass
-
-                     if opponent.health > 0:
-                         print("""\n===============================================================\n""")
-                         delay_print("It's your enemy's turn to attack.")
-                         time.sleep(1)
-                         player.health -= opponent.attack
-                         delay_print("""\n%s's health is now %d""" % (player.name, player.health))
-                         time.sleep(2)
-
-             elif lower_selection == "pokeball":
-                 catch_chance = random.randrange(1, 10)
-                 if catch_chance <= 3:
-                     time.sleep(3)
-                     pokeball_art
-                     delay_print("!!!POKEBALL WAS SUCCESSFULL!!!")
-                     time.sleep(1)
-                     delay_print("You caught a %s!" % opponent.name)
-                     time.sleep(3)
-                     main(player)
-                 else:
-                     time.sleep(2)
-                     delay_print("Pokeball seems uneffective.....")
-                     time.sleep(1)
-
-             elif lower_selection == "master pokeball":
-                 catch_chance = random.randrange(1, 10)
-                 if catch_chance <= 7:
-                     time.sleep(3)
-                     pokeball_art()
-                     delay_print("!!!MASTER POKEBALL WAS SUCCESSFULL!!!\n")
-                     time.sleep(1)
-                     delay_print("You caught a %s!" % opponent.name)
-                     time.sleep(3)
-                     main(player)
-                 else:
-                     time.sleep(2)
-                     delay_print("Master Pokeball seems uneffective.....")
-                     time.sleep(1)
-             else:
-                 print("Item not found.")
-
-         elif action == '4':
-             delay_print("You have fled the battle!")
-             time.sleep(2)
-             main(player)
-
-         else:
-             delay_print("Please type in a number 1 - 4")
+        elif action == '4':
+            delay_print("You have fled the battle!")
+            time.sleep(2)
+            main(player)
+        
+        else:
+            delay_print("Please type in a number 1 - 4")
 
 # Medic #########################################################################
 
