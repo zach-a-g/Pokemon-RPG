@@ -22,7 +22,7 @@ Take on the quest to become the world’s greatest Pokemon master! Start by sele
 To play the game, run the following in the command line:
 ``` bash
     # Clone this repository
-    $ git clone https://github.com/sarahdepalo/Pokemon-RPG
+    $ git clone https://github.com/zach-a-g/Pokemon-RPG
 
     # Go into the directory
     $ cd Pokemon-RPG
